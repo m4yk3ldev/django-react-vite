@@ -1,1 +1,2 @@
-# django-react-vite
+# Django + React using Vite
+
