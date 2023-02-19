@@ -1,10 +1,20 @@
-# syntax=docker/dockerfile:1.4
+FROM python:3.9.16-alpine
 
-FROM --platform=$BUILDPLATFORM python:3.8-alpine AS builder
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+WORKDIR /app/backend
+
+COPY requirements.txt requirements.txt
+
+RUN apk add --no-cache \
+    ca-certificates gcc postgresql-dev linux-headers musl-dev \
+    libffi-dev jpeg-dev zlib-dev git
+
+RUN pip install -U pip
+
+RUN pip install -r requirements.txt
+
 EXPOSE 8000
-WORKDIR /app 
-COPY requirements.txt /app
-RUN pip3 install -r requirements.txt --no-cache-dir
-COPY . /app 
-ENTRYPOINT ["python3"] 
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+
+CMD cd /app/backend && python3 manage.py runserver 0.0.0.0:8000

@@ -3,7 +3,7 @@ import { useLeads } from "./hooks/useLeads"
 import "./App.css";
 
 function App() {
-  const { leads, refreshLeads } = useLeads()
+  const { leads } = useLeads()
   useEffect(() => {
     console.log({ leads });
   }, [leads])
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <p>Hola</p>
-      {leads && leads.map((v) =>
+      {leads && leads?.map((v) =>
       (
         <p key={v.id}>{v.name}</p>
       )

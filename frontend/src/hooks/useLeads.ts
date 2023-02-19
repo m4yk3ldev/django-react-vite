@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getRandomFact } from "../services/leads";
 
 export function useLeads() {
-  const [leads, setLeads] = useState();
+  const [leads, setLeads] = useState([{ id: "", name: "" }]);
 
   const refreshLeads = () => {
     getRandomFact().then((newFact) => setLeads(newFact));
